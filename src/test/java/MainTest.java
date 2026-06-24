@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 class MainTest {
 
     @Test
-    @Disabled("Отключен, так как занимает много времени")
+    @Disabled("Отключен")
     @Timeout(value = 22, unit = TimeUnit.SECONDS)
     void main_RunsWithin22Seconds() throws Exception {
         Main.main(new String[]{});

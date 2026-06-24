@@ -41,7 +41,6 @@ class HippodromeTest {
 
     @Test
     void move_CallsMoveOnAllHorses() {
-        // Используем РЕАЛЬНЫЕ объекты Horse, а не моки
         List<Horse> horses = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             horses.add(new Horse("Horse" + i, 1.0 + i));
@@ -71,9 +70,7 @@ class HippodromeTest {
         Horse horse3 = new Horse("Fast", 1.0, 15.0);
 
         Hippodrome hippodrome = new Hippodrome(List.of(horse1, horse2, horse3));
-
         Horse winner = hippodrome.getWinner();
-
         assertSame(horse3, winner);
     }
 
