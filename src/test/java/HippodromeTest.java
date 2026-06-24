@@ -1,14 +1,10 @@
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class HippodromeTest {
 
     @Test
@@ -38,7 +34,6 @@ class HippodromeTest {
 
         assertNotSame(horses, returnedHorses);
         assertEquals(horses.size(), returnedHorses.size());
-        assertTrue(returnedHorses instanceof List);
         for (int i = 0; i < horses.size(); i++) {
             assertSame(horses.get(i), returnedHorses.get(i));
         }
@@ -46,16 +41,26 @@ class HippodromeTest {
 
     @Test
     void move_CallsMoveOnAllHorses() {
-        List<Horse> mockedHorses = new ArrayList<>();
+        // Используем РЕАЛЬНЫЕ объекты Horse, а не моки
+        List<Horse> horses = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            mockedHorses.add(mock(Horse.class));
+            horses.add(new Horse("Horse" + i, 1.0 + i));
         }
 
-        Hippodrome hippodrome = new Hippodrome(mockedHorses);
+        // Запоминаем начальные дистанции
+        List<Double> initialDistances = new ArrayList<>();
+        for (Horse horse : horses) {
+            initialDistances.add(horse.getDistance());
+        }
+
+        Hippodrome hippodrome = new Hippodrome(horses);
         hippodrome.move();
 
-        for (Horse horse : mockedHorses) {
-            verify(horse).move();
+        // Проверяем, что у каждой лошади дистанция увеличилась
+        for (int i = 0; i < horses.size(); i++) {
+            Horse horse = horses.get(i);
+            assertTrue(horse.getDistance() > initialDistances.get(i),
+                    "Дистанция лошади " + horse.getName() + " должна была увеличиться");
         }
     }
 

@@ -1,6 +1,5 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +32,7 @@ public class Main {
         logger.info("Окончание скачек. Победитель: {}", winnerName);
     }
 
-    private static void watch(@NotNull Hippodrome hippodrome) throws Exception {
+    private static void watch(Hippodrome hippodrome) throws Exception {
         hippodrome.getHorses().stream()
                 .map(horse -> ".".repeat((int) horse.getName().length()) + horse.getName())
                 .forEach(System.out::println);
